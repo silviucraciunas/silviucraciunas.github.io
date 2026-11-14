@@ -1,0 +1,426 @@
+<!DOCTYPE html> 
+<html lang="ro"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Silviu Craciunas - Home Page Responsiv</title> 
+<style> 
+/* Resetare stiluri globale */ 
+* { box-sizing: border-box; margin: 0; padding: 0; } 
+html, body { height: 100%; font-family: Arial, sans-serif; background-color: #636b60; color: #ffffff; } 
+
+/* --- DESKTOP: Blocăm scroll-ul general pe toată pagina --- */ 
+body { display: flex; flex-direction: column; overflow: hidden; position: relative; } 
+
+/* --- HEADER FIX (Doar Profilul) --- */ 
+header { display: flex; align-items: center; justify-content: space-between; padding: 15px 40px; background-color: #555c52; border-bottom: 1px solid rgba(255, 255, 255, 0.1); } 
+.profile-area { display: flex; align-items: center; gap: 15px; } 
+.profile-area img { width: 50px; height: 60px; object-fit: cover; border: 1px solid #fff; } 
+.profile-area span { font-size: 1.1rem; font-weight: bold; } 
+
+/* ===================================================== 
+   --- NOUL MENIU ASCUNS (SIDEBAR CU HOVER) --- 
+   ===================================================== */ 
+/* REPARAT DESKTOP: Înălțimea containerului este doar 90px pe calculator, */
+/* eliberând complet restul marginii drepte pentru scroll-ul coloanei 4! */
+.menu-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 90px; 
+    display: flex;
+    z-index: 1000;
+}
+
+/* Revenim la dimensiunea inițială confortabilă a butonului galben */
+.menu-trigger {
+    width: 60px;
+    height: 90px; 
+    background-color: #ffd700;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom-left-radius: 6px;
+    transition: background 0.3s;
+}
+
+/* Meniul propriu-zis - extins pe toată înălțimea doar când glisează */
+nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #434940;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    padding: 40px 20px;
+}
+
+/* Când mouse-ul este peste întregul container, meniul glisează pe ecran */
+.menu-container:hover nav {
+    transform: translateX(0);
+}
+.menu-container:hover .menu-trigger {
+    background-color: #e6c200;
+}
+
+/* Structura verticală a meniului */
+nav ul { display: flex; flex-direction: column; list-style: none; gap: 25px; } 
+nav ul li a { color: #ffffff; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; display: block; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); transition: color 0.2s; } 
+nav ul li a:hover { color: #ffd700; padding-left: 5px; } 
+
+/* --- CONTAINERUL COLOANELOR (Desktop) --- */ 
+.columns-container { display: flex; flex: 1; padding: 25px; gap: 20px; height: calc(100vh - 90px); } 
+.column { flex: 1; display: flex; flex-direction: column; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; height: 100%; } 
+.column h2 { font-size: 1.1rem; text-align: center; padding: 15px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #ffd700; font-weight: normal; } 
+.column-content { flex: 1; overflow-y: auto; padding: 20px; } 
+.column-content img { width: 100%; height: auto; max-height: 180px; object-fit: cover; margin-bottom: 15px; border: 1px solid rgba(255, 255, 255, 0.2); } 
+.column-content p, .column-content ul { font-size: 0.9rem; line-height: 1.6; color: #e0e0e0; text-align: justify; } 
+.column-content ul { padding-left: 20px; list-style-type: square; } 
+.column-content li { margin-bottom: 10px; } 
+
+/* Stil scrollbar pe desktop */ 
+.column-content::-webkit-scrollbar { width: 6px; } 
+.column-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); } 
+.column-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 3px; } 
+
+/* Elimină chenarul nativ de atingere selectivă pe telefoane */
+.menu-close, .menu-trigger {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================================================== --- ADAPTARE PENTRU MOBIL --- ===================================================== */
+@media (max-width: 768px) {
+    /* REPARAT MOBIL: Revenim la scroll-ul natural pe toată pagina */
+    body {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+
+    header {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 15px 80px 15px 20px; 
+        text-align: left;
+    }
+
+    /* Pe mobil containerul redevine înalt doar pentru a gestiona meniul activ */
+    .menu-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: auto;
+        z-index: 1001;
+    }
+
+    .menu-trigger {
+        display: flex;
+        width: 60px;
+        height: 90px;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background-color: #434940;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        transform: translateX(100%);
+        padding: 60px 20px 20px 20px;
+        display: block !important;
+    }
+
+    nav ul {
+        flex-direction: column !important;
+        gap: 25px !important;
+    }
+
+    .menu-container.active nav {
+        transform: translateX(0);
+    }
+
+    .menu-close {
+        display: block !important;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2.2rem;
+        color: #ffd700;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 10px;
+        line-height: 1;
+        z-index: 9999;
+    }
+
+    /* --- COLOANE PE MOBIL (FLUID ȘI COMPLET) --- */
+    .columns-container {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important; /* Lăsăm containerul să crească natural */
+        padding: 15px;
+        gap: 25px;
+        margin-top: 10px;
+        overflow: visible !important;
+    }
+
+    .column {
+        height: auto !important; /* Coloana crește în funcție de text */
+        display: flex !important;
+        flex-direction: column !important;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        overflow: visible !important; /* Textul nu mai este tăiat sub nicio formă */
+    }
+
+    .column-content {
+        flex: none !important;
+        overflow-y: visible !important; /* Fără scroll-uri interne blocate */
+        padding: 20px !important; 
+    }
+
+    .column-content img {
+        max-height: 200px !important;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Condiții speciale desktop */
+@media (min-width: 769px) {
+    .menu-close {
+        display: none !important;
+    }
+}
+/* Implicit, afișăm conținutul de calculator și îl ascundem pe cel de telefon */
+.doar-calculator { display: block; }
+.doar-telefon { display: none; }
+
+/* Când ecranul este mai mic de 768px (telefon), inversăm afișarea */
+@media (max-width: 768px) {
+    .doar-calculator { display: none; }
+    .doar-telefon { display: block; }
+}
+</style>
+</head> 
+<body> 
+<!-- HEADER SUPERIOR --> 
+<header> 
+    <div class="profile-area"> 
+        <img src="img/silviu.jpg" alt="Silviu Craciunas"> 
+        <span>Silviu Craciunas</span> 
+    </div> 
+</header> 
+
+<!-- STRUCTURA CORECTĂ ȘI CURATĂ A MENIULUI -->
+<div class="menu-container">
+    <div class="menu-trigger">☰</div>
+    <nav>
+        <div class="menu-close">✕</div> 
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="carti.php">Mathematics-Carti</a></li>
+             <li><a href="articole.php">Mathematics-Articole</a></li>
+            <li><a href="site-uri.php">Computer Science-Site-uri</a></li>
+            <li><a href="computer_publicatii.php">Computer Science-Publicatii</a></li>
+            <li><a href="english_poems.php">Literature-Translated Poems</a></li>
+            <li><a href="english_prose.php">Literature-Translated Prose</a></li>
+             <li><a href="poezie.php">Literature-Poezie</a></li>
+            <li><a href="proza.php">Literature-Proza</a></li>
+         
+        </ul>
+    </nav>
+</div>
+<div class="doar-calculator">
+    <!-- ZONA CELOR 4 COLOANE --> 
+<div class="columns-container"> 
+    <!-- Coloana 1: About --> 
+    <div class="column"> 
+        <h2>About</h2> 
+        <div class="column-content"> 
+            <img src="img/siria.jpeg" alt="Siria Village"> 
+            <p style="text-align: center; font-style: italic; margin-bottom: 15px;">b. 24 october 1946, Șiria Village, Arad, Romania</p> 
+            <ul> 
+                <li>2011 Withdrawn from official activities</li> 
+                <li>1991-2011 Associate Professor position in the Department of Mathematics and Computer Science at "Lucian Blaga" University of Sibiu</li> 
+                <li>1985-1991 Principal Scientist at University of Bucharest</li> 
+                <li>1976-1985 Scientist at Metallurgical Research Institute</li> 
+                <li>1972-1975 Associate Professor position at University of Constantine, Algerie</li>
+                <li> 1969-1972 Assistant position at University of Galati</li>
+                <li>1993 - 1996: Secretar Ştiinţific al Facultăţii de Ştiinţe, Universitatea “Lucian Blaga” Sibiu</li>
+            </ul> 
+        </div> 
+    </div> 
+    
+    <!-- Coloana 2: Mathematics --> 
+    <div class="column">
+            <h2>Mathematics - Articole</h2>
+            <div class="column-content">               
+                <ul>
+                       <li>Crăciunaş S., <i>Teoreme de Analiză matematică II (Teorema Borel-Lebesgve)</i>,
+                           Educaţia Matematică, vol. 4, nr. 1, 2008, pp. 33-38</li>
+    <li>Crăciunaş S., Dicu P., Boncuţ Mioara, <i>Teoreme de Analiză matematică — I (Teorema Weierstrass-Bolzano)</i>, Educaţia Matematică, vol. 3, nr. 1-2, 2007, pp. 79-84</li>
+      <li> Crăciunaş S., <i>A normed space generated by a real function/</i>, Didactica Matematica, Sibiu, 2005</li> 
+    <li> Crăciunaş S., <i>A normed space generated by a real sequence</i>, Didactica Matematica, Sibiu, 2005, vol 1, no.2, pp. 85-90 </li>
+    <li>Crăciunaş S., <i>Quasisymmetric and quasimobius maps on locally convex spaces</i>, General Mathematics, 2004, vol. 12, no. 2, pp. 11-18 </li>
+    <li> Crăciunaş S., <i>Quasi-conformality and equivalent norms</i>, Archivum Mathematicum, tomus 37 (2), 2001, 115-123 ( www.emis.de) </li>
+    <li>Crăciunaş S., <i>K-quasi-conformité dans les espaces localement convexes. Analytique definition</i>, General Mathematics, vol.3, nr.1-2 (1995) 79-86 </li>
+    <li>Crăciunaş S.,<i> K-quasi-conformité dans les espaces localement convexes. La définition métrique</i>, General Mathematics, vol.2, nr.2 (1994) 119-125 </li>
+    <li>Crăciunaş S., <i>Fonctions avec la dilatation triangulaire bornée sur des espaces localement convexes</i>, General Mathematics, vol. 1, nr.1 (1993) 53-58 </li>
+    <li>Crăciunaş S., <i>Quasi-conformité dans les espaces localement convexes</i>, Bulletin Mathematique de la Societé des Sciences Mathématiques de Roumanie, Tome 34 (82), nr.1 (1990) 7-16</li>
+   <li>Crăciunaş S., <i>Aplication quasi-conformes sur des produits finis d’espaces normés</i>, 
+Analele Stiintifice ale Univ. "Al. I. Cuza" din Iasi, vol XXVII, S.l a (1981) 317-331 </li>
+   <li> Crăciunaş S., <i>Homéomorphismes quasi-conformes sur les espaces localement convexes</i>, Complex Analysis Fifth Romanian-Finnish Seminar, Proceedings, Bucharest, 1981,Lecture Notes in Mathematics,1013, Springer Verlag(1982) 50-67</li>
+                </ul>
+            </div>
+        </div>
+    
+    <!-- Coloana 3: Computer Science --> 
+    <div class="column"> 
+        <h2>Computer Science</h2> 
+        <div class="column-content"> 
+            <ul>
+<li><strong>Informatica industriala:</strong> Sisteme informatice pentru conducerea si urmarirea productiei intr-un combinat siderurgic</li>
+<li><strong>Pionierat in utilizarea minicalculatoarelor: </strong>Asistenta in utilizarea sistemului de operare RSX-11M de catre studentii Universitatii din Bucuresti si crearea de suport pentru practica studentilor</li>
+<li><strong>Pionierat in utilizarea calculatoarelor personale: </strong>Asistenta in utilizarea sistemului de operare MS-DOS de catre studentii Universitatii din Bucuresti si crearea de suport pentru practica studentilor</li>
+<li><strong>Pionierat în e-Learning prin sistemul MySeLF (My System foe e-Learning and Formation): </strong> Contribuție majoră la proiectarea și dezvoltarea timpurie a infrastructurii digitale pentru Învățământul la Distanță (IDD) în cadrul Universității „Lucian Blaga” din Sibiu.</li>
+                <li><strong>Videoconferinte: </strong>Realizarea primei aplicatii de videoconferinte din sistemul de invatamant la distanta. Aplicatia a primit premiul de excelenta la Conferinta de Invatamant Virtual CNIV, Bucuresti 2004
+                <li><strong>Televiziune online: </strong>Realizarea unui post TV online in cadrul Departamentului de Invatamant la Distanta a Universitatii “Lucian Blaga” din Sibiu
+<li><strong>Arhitectură de Platformă:</strong> Implementarea unor modele logico-matematice riguroase pentru managementul conținutului educațional, evaluarea studenților și asimilarea resurselor multimedia în procesul de e-Education.</li> <li><strong>Integrare Tehnologică:</strong> Adaptarea cursurilor universitare clasice în structuri de date flexibile și interactive, punând bazele tranziției către platformele moderne de management al învățării (LMS).</li> 
+            
+                <li><strong>Premii: </strong>2004 - Premiul special "Centrul Virtual de Excelenţă SIVECO" – Conferința Națională de Învățămînt Virtual, Universitatea din București</li>
+                <li><strongt>Proiecte: </strong>Membru in proiect POSDRU 61878/2010 "Excelență academică în învățământul la distanță și învățământul cu frecvență redusă – Un demers pentru calitate"
+                <li><strong>Proiecte: </strong> Membru in proiectul SCOLII POSTDOCTORALE PENTRU BIODIVERSITATE SI BIOTEHNOLOGII ALIMENTARE PE
+                    BAZA ECOECONOMIEI SI BIOECONOMIEI NECESARE ECOSANOGENEZEI</li>
+                 <li><strong>Specializari: </strong>Certificat privind perfecționarea în tehnologia învățământului la distanță, Centre Universite - Economie d'Education Permanente, Université des Sciences et Tehnologies de Lille</li>
+                
+            </ul>
+        </div> 
+    </div> 
+    
+    <!-- Coloana 4: Literature --> 
+    <div class="column"> 
+        <h2>Literature</h2> 
+        <div class="column-content">
+            <ul>
+                <li>
+            <p><strong>2018-2024 Editor of W-Poesis magazine</strong></p>
+W-Poesis is an independent, international, free-access literary journal. W-Poesis is an online magazine but it offers all the necessary elements to be printed. For printing, it is not necessary to obtain approvals. It’s like a desert where you can build your literary home. Because the acceptance rate for almost all literary journals is about 5%, we decide to open our house for quality work but without quantitative limitations. We are not interested in porn, racial slurs, excessive gore, or obscenity. We are dedicated to discovering and publishing the finest original poetry. We prefer expressive poems that give us a feeling and affect our soul. We accept submissions year-round. Happy reading and writing!<br>
+                    <img src="literature/wpoesis" alt="">
+                    <br><div align=" center "><font color="black">visit site:&nbsp;&nbsp;<a href=" http://w-poesis.kesug.com/ " target=" _blank ">w-poesis.kesug.com/</a>
+                    </li><li>										              
+            <p><strong>Literary work:</strong> His literary work has been featured in numerous cultural and international magazines, including Indian Literature Review, Congruence, Everyday Poems, Panel Magazine, and Rapsodia. Crăciunaș's poetry deeply explores the profound emotional states of human beings in connection with nature and life.</p> 
+                    </li>
+                    <li>
+                     
+                    Panel Magazine, November 2018, Issue 2<br><div align=" center "><br>
+                        <div align=" center "> <img src="literature/panel-magazine-rounded" alt=""></div>
+                        <div align=" center "> <img src="literature/panel-magazine-genesis" alt=""></div>
+                        visit site:&nbsp;&nbsp;<a href="http://panel-magazine.com/product/issue-2/" target=" _blank ">Genesis & Rounded</a>
+                    </li>
+                     <li>   
+                    	Every Day Poems, 27 February 2016 - Beyond Time<br>                  
+                         <div align=" center "> <img src="literature/every_day" alt=""></div>
+                        visit site:&nbsp;&nbsp;<a href="www.everywritersresource.com/poemeveryday/beyond-time-by-silviu-craciunas/" target=" _blank ">Beyong Time/</a>
+                    </li>
+                         
+                     <li>                  
+                    	Section8Magazine, 2016 March 30, Droplets of Poems
+                         <div align=" center "> <img src="literature/droplets_of_poems" alt=""></div>   
+                         visit site:&nbsp;&nbsp;<a href="wwww.section8magazine.com/droplets-of-poems/" target=" _blank ">Droplets of Poems</a>
+                    </li>
+                     <li>
+                         
+                         <strong>Lazaret - suflete ratacite, roman, Editura Eikon, 2016</strong> În drumurile noastre, deseori ochii iscodesc dincolo de ziduri cu multă curiozitate. Din fericire nu putem vedea în spatele lor, dar, tot din fericire, imaginația ne oferă suportul de a ști că acolo, dincolo de ziduri, se râde și se plânge așa cum și între propriile noastre ziduri ne bucurăm și ne întristăm. A scrie înseamnă să ajuți oamenii să vadă dincolo de ziduri. Dar există și altfel de ziduri în fața cărora chiar și imaginația se blochează. Este zidul care crește acolo unde rațiunea dispare.
+Mergând pe valea Oltului, dinspre Sibiu spre Râmnicu Vâlcea, adesea am trecut pe lângă un astfel de zid. O placă îți spune că ai intrat în satul Lazaret, dar nici nu ai timp să te dumirești și o altă placă te anunță că ai părăsit acest sat chiar înainte de a-l desluși. Totuși, dacă privești în stânga drumului, vei observa un zid lung în spatele căruia sunt ascunse câteva case din care zărești doar acoperișurile și un turn mâncat de vreme. În spatele acestor ziduri își duc viața oameni cu suflete rătăcite de timp și lume. Oameni care au propriul zid la purtător. Și ei au devenit un izvor al dorinței mele de a scrie. De a scrie despre lumea lor. Așa s-a născut acest roman.<br>
+                         <div align="center">
+                          <img src="literature/lazaret.jpg" style="width: 369px; height: 490px; object-fit: contain;" alt="">
+                         </div>
+                    </li>
+                    <li>
+                        Revista Alternanțe, Germania, nr.2 aprilie 2015 - Moartea ca moarte&Galben<br>
+                    </li>
+                     <li>
+                         
+                         <strong>In umbra destinului, roman, Editura Excelsior Art, 2015</strong> Am părăsit logica strictă a spaţiilor abstracte pentru a culege frânturi de viaţă ridicate la nivel de crez sub acoperişul creaţiei literare. În acest spirit, acest roman este doar în parte ficţiune, personajele şi întâmplările fictive constituind piedestalul pe care am aşezat semeni de-ai noştri împreună cu micile lor istorii. Episod cu episod, veţi urca pe acest piedestal şi veţi înţelege că acele fiinţe, acei copii căzuţi victime ale violenţei individuale sau de stat, puteau fi copiii voştri. De acolo, de sus, priviţi pentru ei lumea, iar când veţi coborî în propriul eu lăsaţi-le şi lor un lăcaş cât de mic în viaţa voastră.<br>
+                 
+                         <div align="center">
+                          <img src="literature/in_umbra_destinului.jpg" style="width: 450px; height: 590px; object-fit: contain;" alt="">
+                         </div>
+                    </li>
+                    </ul>
+                    <br><br>
+        </div> 
+    </div> 
+</div> 
+ </div>
+ <div class="doar-telefon">
+    <div class="columns-container">
+       <!-- Coloana 2: Mathematics --> 
+    <div class="column">
+            <h2>Mathematics - Articole</h2>
+            <div class="column-content">
+                <ul>
+                       <li>Crăciunaş S., <i>Teoreme de Analiză matematică II (Teorema Borel-Lebesgve)</i>,
+                           Educaţia Matematică, vol. 4, nr. 1, 2008, pp. 33-38</li>
+    <li>Crăciunaş S., Dicu P., Boncuţ Mioara, <i>Teoreme de Analiză matematică — I (Teorema Weierstrass-Bolzano)</i>, Educaţia Matematică, vol. 3, nr. 1-2, 2007, pp. 79-84</li>
+      <li> Crăciunaş S., <i>A normed space generated by a real function/</i>, Didactica Matematica, Sibiu, 2005</li> 
+    <li> Crăciunaş S., <i>A normed space generated by a real sequence</i>, Didactica Matematica, Sibiu, 2005, vol 1, no.2, pp. 85-90 </li>
+    <li>Crăciunaş S., <i>Quasisymmetric and quasimobius maps on locally convex spaces</i>, General Mathematics, 2004, vol. 12, no. 2, pp. 11-18 </li>
+    <li> Crăciunaş S., <i>Quasi-conformality and equivalent norms</i>, Archivum Mathematicum, tomus 37 (2), 2001, 115-123 ( www.emis.de) </li>
+    <li>Crăciunaş S., <i>K-quasi-conformité dans les espaces localement convexes. Analytique definition</i>, General Mathematics, vol.3, nr.1-2 (1995) 79-86 </li>
+    <li>Crăciunaş S.,<i> K-quasi-conformité dans les espaces localement convexes. La définition métrique</i>, General Mathematics, vol.2, nr.2 (1994) 119-125 </li>
+    <li>Crăciunaş S., <i>Fonctions avec la dilatation triangulaire bornée sur des espaces localement convexes</i>, General Mathematics, vol. 1, nr.1 (1993) 53-58 </li>
+    <li>Crăciunaş S., <i>Quasi-conformité dans les espaces localement convexes</i>, Bulletin Mathematique de la Societé des Sciences Mathématiques de Roumanie, Tome 34 (82), nr.1 (1990) 7-16</li>
+   <li>Crăciunaş S., <i>Aplication quasi-conformes sur des produits finis d’espaces normés</i>, 
+Analele Stiintifice ale Univ. "Al. I. Cuza" din Iasi, vol XXVII, S.l a (1981) 317-331 </li>
+   <li> Crăciunaş S., <i>Homéomorphismes quasi-conformes sur les espaces localement convexes</i>, Complex Analysis Fifth Romanian-Finnish Seminar, Proceedings, Bucharest, 1981,Lecture Notes in Mathematics,1013, Springer Verlag(1982) 50-67</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+           <script>
+        const menuContainer = document.querySelector('.menu-container');
+        const menuTrigger = document.querySelector('.menu-trigger');
+        const menuClose = document.querySelector('.menu-close');
+
+        // Deschide meniul la atingerea butonului galben ☰
+        function openMenuAction(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            menuContainer.classList.add('active');
+        }
+        menuTrigger.addEventListener('click', openMenuAction);
+        menuTrigger.addEventListener('touchend', openMenuAction);
+
+        // Închide meniul la atingerea butonului X
+        function closeMenuAction(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            menuContainer.classList.remove('active');
+        }
+        menuClose.addEventListener('click', closeMenuAction);
+        menuClose.addEventListener('touchend', closeMenuAction);
+
+        // Închide meniul dacă se apasă în afara lui
+        function outsideClickAction(e) {
+            if (!menuContainer.contains(e.target)) {
+                menuContainer.classList.remove('active');
+            }
+        }
+        document.addEventListener('click', outsideClickAction);
+        document.addEventListener('touchend', outsideClickAction);
+    </script>
+</body>
+</html>
